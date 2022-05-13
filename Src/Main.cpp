@@ -23,9 +23,11 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-#include "ThreadManager.h"
-#include "Task.h"
+#include <cinttypes>
+#include <iostream>
+
 #include "Timer.h"
+#include "Backtrack.h"
 
 /// \brief Main.
 ///
@@ -33,29 +35,28 @@
 /// \return 0 (What could possibly go wrong?)
 
 int main(){
-  CThreadManager* pThreadManager = new CThreadManager; //thread manager
+  const size_t n = 14; //width and height of the chessboard
+
+  CBacktrack* pBacktracker = new CBacktrack(n); //backtracker
   CTimer* pTimer = new CTimer; //timer for elapsed and CPU time
 
-  for(size_t i=0; i<100; i++) //create 100 tasks
-    pThreadManager->Insert(new CTask);
-
   pTimer->Start(); //start timing CPU and elapsed time
-  printf("Starting at %s.\n", pTimer->GetCurrentDateAndTime().c_str());
+  std::cout << "Starting at " << pTimer->GetCurrentDateAndTime() << std::endl;
 
-  pThreadManager->Spawn(); //spawn threads
-  pThreadManager->Wait(); //wait for threads to finish
+  uint64_t nCount = pBacktracker->Backtrack(); //backtrack
   
-  printf("Finishing at %s.\n", pTimer->GetCurrentDateAndTime().c_str());
-  printf("Elapsed time %s.\n", pTimer->GetElapsedTime().c_str());
-  printf("CPU time %s.\n", pTimer->GetCPUTime().c_str());
-
-  printf("Processing results computed by threads.\n");
-  pThreadManager->Process(); //process results
-
+  std::cout << "Finishing at " << pTimer->GetCurrentDateAndTime() << std::endl;
+  std::cout << "Elapsed time " << pTimer->GetElapsedTime() << std::endl;
+  std::cout << "CPU time " << pTimer->GetCPUTime() << std::endl;
+  
+  std::cout << pBacktracker->GetNumTasks() << " tasks processed" << std::endl;
+  std::cout << "Board size " << n << std::endl;
+  std::cout << "Number of solutions " << nCount << std::endl;
+  
   //clean up and exit
   
   delete pTimer;
-  delete pThreadManager;
+  delete pBacktracker;
 
   return 0;
 } //main

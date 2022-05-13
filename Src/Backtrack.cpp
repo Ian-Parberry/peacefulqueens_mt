@@ -1,5 +1,5 @@
-/// \file Task.cpp
-/// \brief Code for the class CTask.
+/// \file CMain.cpp
+/// \brief Code for the class CMain.
 
 // MIT License
 //
@@ -23,7 +23,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-#include <algorithm>
+#include "Backtrack.h"
 
 #include "Task.h"
 
@@ -31,11 +31,12 @@
 /// and back-diagonal arrays. Initialize the permutation array to the identity
 /// permutation. Initialize the diagonal and back-diagonal arrays to all
 /// `true`, indicating that all diagonals and back-diagonals are initially
-/// not occupied by a queen.
+/// not occupied by a queen. Create a thread manager.
 /// \param n Size (width and height) of chessboard.
 
-CTask::CTask(const size_t n):
-  m_nSize(n), m_nDiagonalSize(2*n - 1), CBaseTask()
+CBacktrack::CBacktrack(const size_t n):
+  m_nSize(n),
+  m_nDiagonalSize(2*n - 1)
 {
   m_nPerm = new size_t[m_nSize];
   m_bBackDiagonal = new bool[m_nDiagonalSize]; 
@@ -46,30 +47,40 @@ CTask::CTask(const size_t n):
   
   for(size_t i=0; i<m_nDiagonalSize; i++)
     m_bBackDiagonal[i] = m_bDiagonal[i] = true;
+
+  m_pThreadManager = new CThreadManager;
 } //constructor
 
-/// Destructor. Delete memory created by constructor.
+/// Destructor. Delete arrays and objects created by constructor.
 
-CTask::~CTask(){
+CBacktrack::~CBacktrack(){
+  delete m_pThreadManager;
+
   delete [] m_bDiagonal;
   delete [] m_bBackDiagonal;
   delete [] m_nPerm;
 } //destructor
 
-/// Perform this task, that is, start backtracking.
+/// Create and assign a task to finish off a partial solution.
+/// \param m Start index in permutation.
 
-void CTask::Perform(){ 
-  Backtrack(m_nStartIndex);
-} //Perform
+void CBacktrack::CreateTask(const size_t m){
+  CTask* pTask = new CTask(m_nSize);
+  
+  pTask->SetPerm(m_nPerm); 
+  pTask->SetDiagonal(m_bDiagonal); 
+  pTask->SetBackDiagonal(m_bBackDiagonal); 
+  pTask->SetStartIndex(m); 
 
-/// Recursively backtrack for the Peaceful Queens problem. Exhaustively search
-/// through permutations to avoid row and column conflicts, pruning using a
-/// pair of arrays to detect diagonal and back-diagonal conflicts. Keep track
-/// of the number of solutions found. 
-/// \param m Previous array element.
+  m_pThreadManager->Insert(pTask);
+  m_nNumTasks++;
+} //CreateTask
 
-void CTask::Backtrack(const size_t m){
-  if(m == 0)m_nCount++; else{ 
+void CBacktrack::Backtrack(const size_t m, const size_t base){
+  if(m == base)
+    CreateTask(m);
+
+  else{ 
     for(int i=0; i<m; i++){
       const size_t j = m - 1; //first element to swap in permutation
       const size_t k = j - i; //second element to swap in permutation
@@ -80,7 +91,7 @@ void CTask::Backtrack(const size_t m){
         std::swap(m_nPerm[j], m_nPerm[k]); //permute
 
         m_bBackDiagonal[bx] = m_bDiagonal[dx] = false; //mark back-diagonal and diagonal used
-        Backtrack(j); //recurse on smaller array
+        Backtrack(j, base); //recurse on smaller array
         m_bBackDiagonal[bx] = m_bDiagonal[dx] = true; //mark back-diagonal and diagonal unused
 
         std::swap(m_nPerm[j], m_nPerm[k]); //unpermute
@@ -89,43 +100,23 @@ void CTask::Backtrack(const size_t m){
   } //else
 } //Backtrack
 
-/// Reader function for the count member variable.
-/// \return m_nCount.
+void CBacktrack::Backtrack(const size_t base){
+  Backtrack(m_nSize, base);
+} //Backtrack
 
-const uint64_t CTask::GetCount() const{
-  return m_nCount;
-} //GetCount
+uint64_t CBacktrack::Backtrack(){/*
+  const size_t m = 4;
+  const size_t n = (m_nSize < m)? m_nSize: m_nSize - m;*/
+  const size_t n = 4;
+  Backtrack(n);
+  
+  m_pThreadManager->Spawn(); //spawn threads
+  m_pThreadManager->Wait(); //wait for threads to finish
+  m_pThreadManager->Process(); //process the results
 
-/// Set permutation. Assumes that the permutation array has been created and
-/// has size `m_nSize`.
-/// \param p New permutation.
+  return m_pThreadManager->GetCount(); //get the result and return it
+} //Backtrack
 
-void CTask::SetPerm(size_t* p){
-  for(size_t i=0; i<m_nSize; i++)
-    m_nPerm[i] = p[i];
-} //SetPerm
-
-/// Set diagonal array. Assumes that the diagonal array has been created and
-/// has size `m_nDiagonalSize`.
-/// \param p New diagonal array values.
-
-void CTask::SetDiagonal(bool* p){
-  for(size_t i=0; i<m_nDiagonalSize; i++)
-    m_bDiagonal[i] = p[i];
-} //SetDiagonal
-
-/// Set back-diagonal. Assumes that the back-diagonal array has been created
-/// and has size `m_nDiagonalSize`.
-/// \param p New back-diagonal array values.
-
-void CTask::SetBackDiagonal(bool* p){
-  for(size_t i=0; i<m_nDiagonalSize; i++)
-    m_bBackDiagonal[i] = p[i];
-} //SetBackDiagonal
-
-/// Set start index.
-/// \param n New start index.
-
-void CTask::SetStartIndex(const size_t n){
-  m_nStartIndex = n;
-} //SetStartIndex
+const size_t CBacktrack::GetNumTasks() const{
+  return m_nNumTasks;
+} //GetNumTasks

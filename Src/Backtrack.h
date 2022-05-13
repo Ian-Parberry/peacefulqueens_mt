@@ -1,5 +1,5 @@
-/// \file ThreadManager.h
-/// \brief Header for the class CThreadManager.
+/// \file Backtrack.h
+/// \brief Header for the class CMain.
 
 // MIT License
 //
@@ -23,28 +23,35 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-#ifndef __ThreadManager_h__
-#define __ThreadManager_h__
+#ifndef __Backtrack_h_
+#define __Backtrack_h_
 
-#include <thread>
+#include <cinttypes>
 
-#include "BaseThreadManager.h"
-#include "Task.h"
+#include "ThreadManager.h"
 
-/// \brief Thread manager.
-///
-/// The thread manager takes care of the health and feeding of the threads.
+class CBacktrack{
+  private:
+    CThreadManager* m_pThreadManager = nullptr; ///< Pointer to thread manager.
 
-class CThreadManager: public CBaseThreadManager<CTask>{
-  protected:
-    uint64_t m_nCount = 0; ///< Number of solutions found.
+    size_t* m_nPerm = nullptr; ///< Permutation.
+    bool* m_bDiagonal = nullptr; ///< Diagonal unoccupied.
+    bool* m_bBackDiagonal = nullptr; ///< Back-diagonal unoccupied.
 
-    void ProcessTask(CTask*); ///< Process the result of a task.
+    size_t m_nSize = 0; ///< Size (width and height) of chessboard.
+    size_t m_nDiagonalSize = 0; ///< Number of diagonals and back-diagonals.
+    size_t m_nNumTasks = 0; ///< Number of threaded tasks.
+
+    void CreateTask(const size_t);
+    void Backtrack(const size_t, const size_t);
+    void Backtrack(const size_t);
 
   public:
-    CThreadManager(); ///< Constructor.
+    CBacktrack(const size_t); ///< Constructor.
+    ~CBacktrack(); ///< Destructor.
     
-    const uint64_t GetCount() const; ///< Get the count.
-}; //CThreadManager
+    uint64_t Backtrack();
+    const size_t GetNumTasks() const;
+}; //CBacktrack
 
-#endif //__ThreadManager_h__
+#endif //__Backtrack_h_

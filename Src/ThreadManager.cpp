@@ -33,12 +33,16 @@
 CThreadManager::CThreadManager(): CBaseThreadManager(){
 } //constructor
 
-/// Report a result.
+/// Process a result.
 /// \param pTask Pointer to a task.
 
 void CThreadManager::ProcessTask(CTask* pTask){
-  if(pTask)
-    printf("Task %zd was performed by thread %zd\n",
-      pTask->GetTaskId(), pTask->GetThreadId());
+  m_nCount += pTask->GetCount();
 } //Process
 
+/// Reader function for the count member variable.
+/// \return m_nCount.
+
+const uint64_t CThreadManager::GetCount() const{
+  return m_nCount;
+} //GetCount

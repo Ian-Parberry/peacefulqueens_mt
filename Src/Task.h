@@ -26,6 +26,8 @@
 #ifndef __Task_h_
 #define __Task_h_
 
+#include <cinttypes>
+
 #include "BaseTask.h"
 
 /// \brief Task.
@@ -33,10 +35,30 @@
 /// Describes a  task.
 
 class CTask: public CBaseTask{
+  private:
+    size_t* m_nPerm = nullptr; ///< Permutation.
+    bool* m_bDiagonal = nullptr; ///< Diagonal unoccupied.
+    bool* m_bBackDiagonal = nullptr; ///< Back-diagonal unoccupied.
+
+    size_t m_nSize = 0; ///< Size (width and height) of chessboard.
+    size_t m_nDiagonalSize = 0; ///< Number of diagonals and back-diagonals.
+    size_t m_nStartIndex = 0; ///<Starting index into permutation.
+
+    uint64_t m_nCount = 0; ///< Number of solutions found.
+
+    void Backtrack(const size_t); ///< Backtrack.
+
   public:
-    CTask(); ///< Default constructor.
+    CTask(const size_t); ///< Constructor.
+    ~CTask(); ///< Destructor.
+    
+    void SetPerm(size_t*); ///< Set permutation.
+    void SetDiagonal(bool*); ///< Set diagonal.
+    void SetBackDiagonal(bool*); ///< Set back-diagonal.
+    void SetStartIndex(const size_t); ///< Set start index.
 
     virtual void Perform(); ///< Perform the task.
+    const uint64_t GetCount() const; ///< Get the count.
 }; //CTask
 
 #endif //__Task_h_
