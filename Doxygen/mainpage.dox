@@ -1,0 +1,39 @@
+/**
+
+\mainpage Multithreaded Peaceful Queens
+
+\ref table1 "Table 1" shows the
+number of Peaceful Queens solutions \f$Q(n)\f$ on an \f$n \times n\f$ chessboard for
+\f$4 \leq n \leq 20\f$ with CPU and elapsed times using 15 of the available 16
+threads on an
+Intel(R) Core(TM) i9-9900 CPU @ 3.10GHz.
+
+\anchor table1
+<center>
+<table>
+<caption>
+Table 1.
+</caption>
+<tr><th>\f$n\f$</th><th>\f$Q(n)\f$</th><th>CPU Time</th><th>Elapsed Time</th>
+<tr><td>4</td><td>2</td><td>< 1 ms</td><td>4 ms</td>
+<tr><td>5</td><td>10</td><td>< 1 ms</td><td>2 ms</td>
+<tr><td>6</td><td>4</td><td>< 1 ms</td><td>2 ms</td>
+<tr><td>7</td><td>40</td><td>< 1 ms</td><td>2 ms</td>
+<tr><td>8</td><td>92</td><td>< 1 ms</td><td>4 ms</td>
+<tr><td>9</td><td>352</td><td>< 1 ms</td><td>3 ms</td>
+<tr><td>10</td><td>724</td><td>< 1 ms</td><td>8 ms</td>
+<tr><td>11</td><td>2,680</td><td>< 1 ms</td><td>7 ms</td>
+<tr><td>12</td><td>14,200</td><td>< 1 ms</td><td>12 ms</td>
+<tr><td>13</td><td>73,712</td><td>578 ms</td><td>52 ms</td>
+<tr><td>14</td><td>365,596</td><td>3.78 sec</td><td>269 ms</td>
+<tr><td>15</td><td>2,279,184</td><td>26.2 sec</td><td>1.82 sec</td>
+<tr><td>16</td><td>14,772,512</td><td>2 min, 52 sec</td><td>11.65 sec</td>
+<tr><td>17</td><td>95,815,104</td><td>19 min, 35 sec</td><td>1 min, 20 sec</td>
+<tr><td>18</td><td>666,090,624</td><td>2 hr, 28 min</td><td>10 min, 2 sec</td>
+<tr><td>19</td><td>4,968,057,848</td><td>19 hr, 31 min</td><td>1 hr, 19 min</td>
+<tr><td>20</td><td>39,029,188,884</td><td>6 days, 16 hr</td><td>10 hr, 48 min</td>
+</table>
+</center>
+
+
+**/
