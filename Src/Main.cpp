@@ -25,6 +25,7 @@
 
 #include <cinttypes>
 #include <iostream>
+#include <fstream>
 
 #include "Timer.h"
 #include "Backtrack.h"
@@ -35,28 +36,46 @@
 /// \return 0 (What could possibly go wrong?)
 
 int main(){
-  const size_t n = 14; //width and height of the chessboard
+  std::ofstream output("Output.txt");
+  output << "<center>" << std::endl;
+  output << "<table>" << std::endl;
+  output << "<tr>" << "<th>n</th>"  << "<th>Solutions</th>" <<
+    "<th>CPU Time</th>" << "<th>Elapsed Time</th>" << std::endl;
 
-  CBacktrack* pBacktracker = new CBacktrack(n); //backtracker
   CTimer* pTimer = new CTimer; //timer for elapsed and CPU time
+  
+  for(size_t n=4; n<=18; n++){
+    CBacktrack* pBacktracker = new CBacktrack(n); //backtracker
 
-  pTimer->Start(); //start timing CPU and elapsed time
-  std::cout << "Starting at " << pTimer->GetCurrentDateAndTime() << std::endl;
+    pTimer->Start(); //start timing CPU and elapsed time
+    std::cout << "Starting at " << pTimer->GetCurrentDateAndTime() << std::endl;
 
-  uint64_t nCount = pBacktracker->Backtrack(); //backtrack
+    const uint64_t nCount = pBacktracker->Backtrack(); //backtrack
+    const std::string strCount(CommaSeparatedString(nCount));
   
-  std::cout << "Finishing at " << pTimer->GetCurrentDateAndTime() << std::endl;
-  std::cout << "Elapsed time " << pTimer->GetElapsedTime() << std::endl;
-  std::cout << "CPU time " << pTimer->GetCPUTime() << std::endl;
+    std::cout << "Finishing at " << pTimer->GetCurrentDateAndTime() << std::endl;
+    std::cout << "Elapsed time " << pTimer->GetElapsedTime() << std::endl;
+    std::cout << "CPU time " << pTimer->GetCPUTime() << std::endl;
   
-  std::cout << pBacktracker->GetNumTasks() << " tasks processed" << std::endl;
-  std::cout << "Board size " << n << std::endl;
-  std::cout << "Number of solutions " << nCount << std::endl;
+    std::cout << pBacktracker->GetNumTasks() << " tasks processed by " <<
+      pBacktracker->GetNumThreads() << " threads" << std::endl;
+    std::cout << "Board size " << n << std::endl;
+    std::cout << "Number of solutions " << strCount << std::endl;
+    std::cout << std::endl;
+
+    output << "<tr>";
+    output << "<td>" << n << "</td><td>" << strCount << "</td><td>" <<
+      pTimer->GetCPUTime() << "</td><td>" << pTimer->GetElapsedTime() <<
+      "</td>" << std::endl;
   
+    delete pBacktracker;
+  } //for
+  
+  output << "</table>" << std::endl;
+  output << "</center>" << std::endl;
+
   //clean up and exit
-  
-  delete pTimer;
-  delete pBacktracker;
 
+  delete pTimer;
   return 0;
 } //main

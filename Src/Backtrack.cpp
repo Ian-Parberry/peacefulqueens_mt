@@ -104,10 +104,10 @@ void CBacktrack::Backtrack(const size_t base){
   Backtrack(m_nSize, base);
 } //Backtrack
 
-uint64_t CBacktrack::Backtrack(){/*
-  const size_t m = 4;
-  const size_t n = (m_nSize < m)? m_nSize: m_nSize - m;*/
-  const size_t n = 4;
+uint64_t CBacktrack::Backtrack(){
+  const size_t m = 2;
+  const size_t n = (m_nSize < m)? m_nSize: m_nSize - m;
+
   Backtrack(n);
   
   m_pThreadManager->Spawn(); //spawn threads
@@ -120,3 +120,11 @@ uint64_t CBacktrack::Backtrack(){/*
 const size_t CBacktrack::GetNumTasks() const{
   return m_nNumTasks;
 } //GetNumTasks
+
+/// Reader function for the number of threads used by this application.
+/// Assumes that the thread manager has been created and initialized.
+/// \return Number of threads used.
+
+const size_t CBacktrack::GetNumThreads() const{
+  return m_pThreadManager->GetNumThreads();
+} //GetNumThreads

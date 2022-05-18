@@ -52,6 +52,7 @@ class CBacktrack{
     
     uint64_t Backtrack();
     const size_t GetNumTasks() const;
+    const size_t GetNumThreads() const; ///< Get number of threads.
 }; //CBacktrack
 
 #endif //__Backtrack_h_
