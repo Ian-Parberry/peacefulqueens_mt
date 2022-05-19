@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256" height="256" viewBox="-4 -4 256 256" xmlns="http://www.w3.org/2000/svg">
+<style>
+circle{stroke:black;stroke-width:1;fill:darkgray;r:11}
+</style>
+<rect width="224" height="224" fill="none" stroke="black" stroke-width="1"/>
+<rect x="0" y="32" width="32" height="32"/>
+<rect x="0" y="96" width="32" height="32"/>
+<rect x="0" y="160" width="32" height="32"/>
+<rect x="32" y="0" width="32" height="32"/>
+<rect x="32" y="64" width="32" height="32"/>
+<rect x="32" y="128" width="32" height="32"/>
+<rect x="32" y="192" width="32" height="32"/>
+<rect x="64" y="32" width="32" height="32"/>
+<rect x="64" y="96" width="32" height="32"/>
+<rect x="64" y="160" width="32" height="32"/>
+<rect x="96" y="0" width="32" height="32"/>
+<rect x="96" y="64" width="32" height="32"/>
+<rect x="96" y="128" width="32" height="32"/>
+<rect x="96" y="192" width="32" height="32"/>
+<rect x="128" y="32" width="32" height="32"/>
+<rect x="128" y="96" width="32" height="32"/>
+<rect x="128" y="160" width="32" height="32"/>
+<rect x="160" y="0" width="32" height="32"/>
+<rect x="160" y="64" width="32" height="32"/>
+<rect x="160" y="128" width="32" height="32"/>
+<rect x="160" y="192" width="32" height="32"/>
+<rect x="192" y="32" width="32" height="32"/>
+<rect x="192" y="96" width="32" height="32"/>
+<rect x="192" y="160" width="32" height="32"/>
+<rect  x="160" y="128" width="32" height="96" fill="none" stroke="deepskyblue" stroke-width="4"/>
+<rect  x="192" y="96" width="32" height="32" fill="none" stroke="red" stroke-width="4"/>
+<circle cx="16" cy="48"/>
+<circle cx="48" cy="208"/>
+<circle cx="80" cy="144"/>
+<circle cx="112" cy="80"/>
+<circle cx="144" cy="16"/>
+<circle cx="176" cy="176"/>
+<circle cx="208" cy="112"/>
+</svg>

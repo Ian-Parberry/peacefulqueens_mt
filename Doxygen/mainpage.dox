@@ -2,8 +2,42 @@
 
 \mainpage Multithreaded Peaceful Queens
 
+
+## Normal Form
+
+An \f$n \times n \f$ Peaceful Queens solution is said to be in _normal form_ if either
+(remembering that rows are numbered from \f$0\f$ to \f$n - 1\f$ from top to bottom and
+columns are numbered from \f$0\f$ to \f$n - 1\f$ from left to right),
+1. the queen in the last column is below the middle of the board
+(the red rectangle in \ref fig1 "Fig. 1" and \ref fig2 "Fig. 2"), more precisely, 
+the queen in column \f$n - 1\f$ is in row \f$\geq \lceil n/2 \rceil\f$,
+or 
+2. \f$n\f$ is odd, the queen in the last column is in the middle of the board (the red square in \ref fig3 "Fig. 3")
+and the queen in the second-last column is below the middle of the board
+(the blue rectangle in \ref fig3 "Fig. 3"),
+more precisely,
+the queen in in column \f$n - 1\f$ is in row \f$\lfloor n/2 \rfloor\f$,
+and the queen in column \f$n - 2\f$ is in row \f$ \geq \lceil n/2 \rceil\f$.
+
+Note that for every \f$n \times n \f$ Peaceful Queens solution in normal form there is another
+that is not in normal form obtained by reflecting the normal form solution about the horizontal
+axis. Therefore, if \f$Q(n)\f$ is the number of solutions to the \f$n \times n \f$ Peaceful Queens
+problem and \f$Q'(n)\f$ is the number of solutions in normal form, then \f$Q(n) = 2Q'(n)\f$.
+
+\anchor fig1
+\image html 135024.svg "Fig. 1: A solution to the 6x6 Peaceful Queens problem that has a queen in the inside the red rectangle is in normal form." width=25%
+
+\anchor fig2
+\image html 1306425.svg "Fig. 2: A solution to the 7x7 Peaceful Queens problem that has the queen  inside the red rectangle is in normal form." width=25%
+
+\anchor fig3
+\image html 1642053.svg "Fig. 3: A solution to the 7x7 Peaceful Queens problem that has the queen inside the red square and a queen inside the blue rectangle is in normal form." width=25%
+
+## The Results
+
+
 \ref table1 "Table 1" shows the
-number of Peaceful Queens solutions \f$Q(n)\f$ on an \f$n \times n\f$ chessboard for
+number of normal form Peaceful Queens solutions \f$Q'(n)\f$ on an \f$n \times n\f$ chessboard for
 \f$4 \leq n \leq 20\f$ with CPU and elapsed times using 15 of the available 16
 threads on an
 Intel(R) Core(TM) i9-9900 CPU @ 3.10GHz.
@@ -34,6 +68,4 @@ Table 1.
 <tr><td>20</td><td>39,029,188,884</td><td>6 days, 16 hr</td><td>10 hr, 48 min</td>
 </table>
 </center>
-
-
 **/

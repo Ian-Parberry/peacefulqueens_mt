@@ -44,7 +44,7 @@ int main(){
 
   CTimer* pTimer = new CTimer; //timer for elapsed and CPU time
   
-  for(size_t n=10; n<=15; n++){
+  for(size_t n=2; n<=4; n++){
     CBacktrack* pBacktracker = new CBacktrack(n); //backtracker
     std::cout << "Board size " << n << std::endl;
 
