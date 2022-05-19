@@ -76,22 +76,25 @@ void CBacktrack::CreateTask(const size_t m){
   m_nNumTasks++;
 } //CreateTask
 
-void CBacktrack::Backtrack(const size_t m, const size_t base){
-  if(m == base)
-    CreateTask(m);
+/// \param n The last index filled in.
+/// \param nTail The size of the tail to be filled in here.
+
+void CBacktrack::Backtrack(const size_t m, const size_t nTail){
+  if(m == nTail) //base of recursion, meaning that the tail has been filled in
+    CreateTask(m); //create a task for the threads to perform
 
   else{ 
     for(int i=0; i<m; i++){
-      const size_t j = m - 1; //first element to swap in permutation
-      const size_t k = j - i; //second element to swap in permutation
+      const size_t j = m - 1; //largest index to swap
+      const size_t k = j - i; //smallest index to swap
       const size_t dx = m_nPerm[k] + j; //diagonal index
       const size_t bx = m_nPerm[k] - m + m_nSize; //back-diagonal index
 
-      if(m_bBackDiagonal[bx] && m_bDiagonal[dx]){ //diagonal & back-diagonal unused
+      if(m_bBackDiagonal[bx] && m_bDiagonal[dx]){ //diagonal & back-diagonal unused      
         std::swap(m_nPerm[j], m_nPerm[k]); //permute
 
         m_bBackDiagonal[bx] = m_bDiagonal[dx] = false; //mark back-diagonal and diagonal used
-        Backtrack(j, base); //recurse on smaller array
+        Backtrack(j, nTail); //recurse on smaller array
         m_bBackDiagonal[bx] = m_bDiagonal[dx] = true; //mark back-diagonal and diagonal unused
 
         std::swap(m_nPerm[j], m_nPerm[k]); //unpermute
@@ -100,15 +103,16 @@ void CBacktrack::Backtrack(const size_t m, const size_t base){
   } //else
 } //Backtrack
 
-void CBacktrack::Backtrack(const size_t base){
-  Backtrack(m_nSize, base);
-} //Backtrack
+/// Backtrack for Peaceful Queens solutions. Create initial configurations,
+/// spawn threads, wait until all threads have terminated, then process the
+/// resulting Peaceful Queens solutions.
+/// \return The number of Peaceful Queens solutions found.
 
 uint64_t CBacktrack::Backtrack(){
   const size_t m = 2;
   const size_t n = (m_nSize < m)? m_nSize: m_nSize - m;
 
-  Backtrack(n);
+  Backtrack(m_nSize, n);
   
   m_pThreadManager->Spawn(); //spawn threads
   m_pThreadManager->Wait(); //wait for threads to finish
@@ -117,12 +121,15 @@ uint64_t CBacktrack::Backtrack(){
   return m_pThreadManager->GetCount(); //get the result and return it
 } //Backtrack
 
+/// Reader function for the number of tasks completed.
+/// \return Number of tasks completed.
+
 const size_t CBacktrack::GetNumTasks() const{
   return m_nNumTasks;
 } //GetNumTasks
 
 /// Reader function for the number of threads used by this application.
-/// Assumes that the thread manager has been created and initialized.
+/// Assumes that the thread manager has been created and initialized. 
 /// \return Number of threads used.
 
 const size_t CBacktrack::GetNumThreads() const{

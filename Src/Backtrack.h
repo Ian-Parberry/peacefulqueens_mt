@@ -42,16 +42,15 @@ class CBacktrack{
     size_t m_nDiagonalSize = 0; ///< Number of diagonals and back-diagonals.
     size_t m_nNumTasks = 0; ///< Number of threaded tasks.
 
-    void CreateTask(const size_t);
-    void Backtrack(const size_t, const size_t);
-    void Backtrack(const size_t);
+    void CreateTask(const size_t); ///< Create a task.
+    void Backtrack(const size_t, const size_t); ///< Backtrack some and multithread.
 
   public:
     CBacktrack(const size_t); ///< Constructor.
     ~CBacktrack(); ///< Destructor.
     
-    uint64_t Backtrack();
-    const size_t GetNumTasks() const;
+    uint64_t Backtrack(); ///< Backtrack over all candidates.
+    const size_t GetNumTasks() const; ///< Get number of completed tasks.
     const size_t GetNumThreads() const; ///< Get number of threads.
 }; //CBacktrack
 
