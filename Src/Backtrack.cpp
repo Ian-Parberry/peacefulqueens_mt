@@ -76,8 +76,10 @@ void CBacktrack::CreateTask(const size_t m){
   m_nNumTasks++;
 } //CreateTask
 
-/// \param n The last index filled in.
+/// \param m The last index filled in.
 /// \param nTail The size of the tail to be filled in here.
+
+#define even(n) (((n)&1)? false: true)
 
 void CBacktrack::Backtrack(const size_t m, const size_t nTail){
   if(m == nTail) //base of recursion, meaning that the tail has been filled in
@@ -91,13 +93,18 @@ void CBacktrack::Backtrack(const size_t m, const size_t nTail){
       const size_t bx = m_nPerm[k] - m + m_nSize; //back-diagonal index
 
       if(m_bBackDiagonal[bx] && m_bDiagonal[dx]){ //diagonal & back-diagonal unused      
-        std::swap(m_nPerm[j], m_nPerm[k]); //permute
+        if(
+          (m != m_nSize && 
+            (even(m_nSize) || m != m_nSize - 1 || m_nPerm[m] != m_nSize/2)
+          ) || m_nPerm[k] >= m_nSize/2){
+           std::swap(m_nPerm[j], m_nPerm[k]); //permute
 
-        m_bBackDiagonal[bx] = m_bDiagonal[dx] = false; //mark back-diagonal and diagonal used
-        Backtrack(j, nTail); //recurse on smaller array
-        m_bBackDiagonal[bx] = m_bDiagonal[dx] = true; //mark back-diagonal and diagonal unused
+           m_bBackDiagonal[bx] = m_bDiagonal[dx] = false; //mark back-diagonal and diagonal used
+           Backtrack(j, nTail); //recurse on smaller array
+           m_bBackDiagonal[bx] = m_bDiagonal[dx] = true; //mark back-diagonal and diagonal unused
 
-        std::swap(m_nPerm[j], m_nPerm[k]); //unpermute
+           std::swap(m_nPerm[j], m_nPerm[k]); //unpermute
+        } //if
       } //if
     } //for
   } //else
@@ -109,8 +116,8 @@ void CBacktrack::Backtrack(const size_t m, const size_t nTail){
 /// \return The number of Peaceful Queens solutions found.
 
 uint64_t CBacktrack::Backtrack(){
-  const size_t m = 2;
-  const size_t n = (m_nSize < m)? m_nSize: m_nSize - m;
+  const size_t nTail = 2; //number of entries in suffix
+  const size_t n = (m_nSize < nTail)? m_nSize: m_nSize - nTail;
 
   Backtrack(m_nSize, n);
   
