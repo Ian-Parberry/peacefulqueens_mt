@@ -85,7 +85,7 @@ void CBacktrack::Backtrack(const size_t m, const size_t nTail){
     CreateTask(m); //create a task for the threads to perform
 
   else{ 
-    for(int i=0; i<m; i++){
+    for(size_t i=0; i<m; i++){
       const size_t j = m - 1; //largest index to swap
       const size_t k = j - i; //smallest index to swap
       const size_t dx = m_nPerm[k] + j; //diagonal index

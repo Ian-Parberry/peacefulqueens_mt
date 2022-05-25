@@ -70,7 +70,7 @@ void CTask::Perform(){
 
 void CTask::Backtrack(const size_t m){
   if(m == 0)m_nCount++; else{ 
-    for(int i=0; i<m; i++){
+    for(size_t i=0; i<m; i++){
       const size_t j = m - 1; //first element to swap in permutation
       const size_t k = j - i; //second element to swap in permutation
       const size_t dx = m_nPerm[k] + j; //diagonal index

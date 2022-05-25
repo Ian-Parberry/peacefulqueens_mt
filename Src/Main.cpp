@@ -49,12 +49,12 @@ int main(){
     std::cout << "Board size " << n << std::endl;
 
     pTimer->Start(); //start timing CPU and elapsed time
-    std::cout << "Starting at " << pTimer->GetCurrentDateAndTime() << std::endl;
+    std::cout << "Starting at " << pTimer->GetTimeAndDate() << std::endl;
 
     const uint64_t nCount = pBacktracker->Backtrack(); //backtrack
     const std::string strCount(CommaSeparatedString(nCount));
   
-    std::cout << "Finishing at " << pTimer->GetCurrentDateAndTime() << std::endl;
+    std::cout << "Finishing at " << pTimer->GetTimeAndDate() << std::endl;
     std::cout << "Elapsed time " << pTimer->GetElapsedTime() << std::endl;
     std::cout << "CPU time " << pTimer->GetCPUTime() << std::endl;
   
