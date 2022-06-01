@@ -38,17 +38,19 @@ CBacktrack::CBacktrack(const size_t n):
   m_nSize(n),
   m_nDiagonalSize(2*n - 1)
 {
-  m_nPerm = new size_t[m_nSize];
-  m_bBackDiagonal = new bool[m_nDiagonalSize]; 
-  m_bDiagonal = new bool[m_nDiagonalSize]; 
-  
-  for(size_t i=0; i<m_nSize; i++)
-    m_nPerm[i] = i;
-  
-  for(size_t i=0; i<m_nDiagonalSize; i++)
-    m_bBackDiagonal[i] = m_bDiagonal[i] = true;
-
   m_pThreadManager = new CThreadManager;
+
+  if(m_nSize >= m_nMinSize){ //safety
+    m_nPerm = new size_t[m_nSize];
+    m_bBackDiagonal = new bool[m_nDiagonalSize]; 
+    m_bDiagonal = new bool[m_nDiagonalSize]; 
+  
+    for(size_t i=0; i<m_nSize; i++)
+      m_nPerm[i] = i;
+  
+    for(size_t i=0; i<m_nDiagonalSize; i++)
+      m_bBackDiagonal[i] = m_bDiagonal[i] = true;
+  } //if
 } //constructor
 
 /// Destructor. Delete arrays and objects created by constructor.
@@ -114,7 +116,7 @@ void CBacktrack::Backtrack(const size_t m, const size_t nTail){
 /// \return The number of Peaceful Queens solutions found.
 
 uint64_t CBacktrack::Backtrack(){
-  if(m_nSize < 4)return 0; //bail and fail
+  if(m_nSize < m_nMinSize)return 0; //bail and fail
 
   const size_t nTail = 2; //number of entries in suffix
   const size_t n = (m_nSize < nTail)? m_nSize: m_nSize - nTail;

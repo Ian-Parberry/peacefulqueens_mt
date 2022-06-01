@@ -32,6 +32,7 @@
 
 class CBacktrack{
   private:
+    const size_t m_nMinSize = 4; ///< Minimum board size.
     CThreadManager* m_pThreadManager = nullptr; ///< Pointer to thread manager.
 
     size_t* m_nPerm = nullptr; ///< Permutation.

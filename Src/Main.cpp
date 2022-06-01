@@ -44,7 +44,7 @@ int main(){
 
   CTimer* pTimer = new CTimer; //timer for elapsed and CPU time
   
-  for(size_t n=2; n<=4; n++){
+  for(size_t n=19; n<=20; n++){
     CBacktrack* pBacktracker = new CBacktrack(n); //backtracker
     std::cout << "Board size " << n << std::endl;
 
@@ -52,7 +52,6 @@ int main(){
     std::cout << "Starting at " << pTimer->GetTimeAndDate() << std::endl;
 
     const uint64_t nCount = pBacktracker->Backtrack(); //backtrack
-    const std::string strCount(CommaSeparatedString(nCount));
   
     std::cout << "Finishing at " << pTimer->GetTimeAndDate() << std::endl;
     std::cout << "Elapsed time " << pTimer->GetElapsedTime() << std::endl;
@@ -60,6 +59,8 @@ int main(){
   
     std::cout << pBacktracker->GetNumTasks() << " tasks processed by " <<
       pBacktracker->GetNumThreads() << " threads" << std::endl;
+
+    const std::string strCount(CommaSeparatedString(nCount));
     std::cout << "Number of solutions " << strCount << std::endl;
     std::cout << std::endl;
 
