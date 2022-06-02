@@ -1,6 +1,6 @@
 # Multi-threaded Peaceful Queens
 
-<img src="https://github.com/Ian-Parberry/peacefulqueens/blob/main/Doxygen/Images/135024.svg" alt="" width="35%" />
+<img src="https://github.com/Ian-Parberry/peacefulqueens_mt/blob/main/Doxygen/Images/135024.svg" alt="" width="35%" />
 
 Multi-threaded backtracking code for the Peaceful Queens problem created and maintained
 by [Ian Parberry](http://ianparberry.com/).
