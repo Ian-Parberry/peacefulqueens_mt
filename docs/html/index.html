@@ -74,8 +74,11 @@ $(function() {
   <div class="headertitle"><div class="title">Multithreaded Peaceful Queens </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2>Normal Form</h2>
-<p >An \(n \times n \) Peaceful Queens solution is said to be in <em>normal form</em> if either (remembering that rows are numbered from \(0\) to \(n - 1\) from top to bottom and columns are numbered from \(0\) to \(n - 1\) from left to right),</p><ol type="1">
+<div class="textblock"><h2>1. Introduction</h2>
+<p >The <em>Peaceful Queens problem</em> is the problem of placing \(n\) queens on an \(n \times n\) chessboard in such a way that no queen threatens any other, recalling that queens can attack along row, column, diagonals, and back-diagonals. The code in this repository is a multi-threaded version of the backtracking code from <a href="https://github.com/Ian-Parberry/peacefulqueens">https://github.com/Ian-Parberry/peacefulqueens</a> using the <a href="https://github.com/Ian-Parberry/threadplusplus"><code>thread++</code> library</a>. For more information about the backtracking algorithm, see <a href="https://ian-parberry.github.io/peacefulqueens">https://ian-parberry.github.io/peacefulqueens</a>.</p>
+<p ><a class="anchor" id="sec2"></a></p><h2>2. Normal Form Peaceful Queens Solutions</h2>
+<p >Instead of counting all solutions to the Peaceful Queens problem, we will count only solutions that have a special structure, called <em>normal form</em> solutions. An \(n \times n \) Peaceful Queens solution is said to be in <em>normal form</em> if either (remembering that rows are numbered from \(0\) to \(n - 1\) from top to bottom and columns are numbered from \(0\) to \(n - 1\) from left to right),</p>
+<ol type="1">
 <li>the queen in the last column is below the middle of the board (the red rectangle in <a class="el" href="index.html#fig1">Fig. 1</a> and <a class="el" href="index.html#fig2">Fig. 2</a>), more precisely, the queen in column \(n - 1\) is in row \(\geq \lceil n/2 \rceil\), or</li>
 <li>\(n\) is odd, the queen in the last column is in the middle of the board (the red square in <a class="el" href="index.html#fig3">Fig. 3</a>) and the queen in the second-last column is below the middle of the board (the blue rectangle in <a class="el" href="index.html#fig3">Fig. 3</a>), more precisely, the queen in in column \(n - 1\) is in row \(\lfloor n/2 \rfloor\), and the queen in column \(n - 2\) is in row \( \geq \lceil n/2 \rceil\).</li>
 </ol>
@@ -92,52 +95,61 @@ Fig. 2: A solution to the 7x7 Peaceful Queens problem that has the queen inside 
 <object type="image/svg+xml" data="1642053.svg" width="25%" style="pointer-events: none;"></object>
 <div class="caption">
 Fig. 3: A solution to the 7x7 Peaceful Queens problem that has the queen inside the red square and a queen inside the blue rectangle is in normal form.</div></div>
-<h2>The Results</h2>
-<p ><a class="el" href="index.html#table1">Table 1</a> shows the number of normal form Peaceful Queens solutions \(Q&#39;(n)\) on an \(n \times n\) chessboard for \(4 \leq n \leq 20\) with CPU and elapsed times using 15 of the available 16 threads on an Intel(R) Core(TM) i9-9900 CPU @ 3.10GHz.</p>
+<h2>3. Compiling the Code</h2>
+<h3>3.1 All Platforms</h3>
+<p >Before proceeding, download <a href="https://github.com/Ian-Parberry/threadplusplus">https://github.com/Ian-Parberry/threadplusplus</a> and compile it according to the instructions in <a href="https://ian-parberry.github.io/threadplusplus/">https://ian-parberry.github.io/threadplusplus/</a>.</p>
+<h3>3.2 Windows and Visual Studio</h3>
+<p >A Visual Studio solution file <code>peacefulqueens_mt.sln</code> has been provided in the root folder. It has been tested with Visual Studio 2019 Community under Windows 10.</p>
+<h3>3.3 *NIX and g++</h3>
+<p >A <code>make</code> file has been placed in the <code>Src</code> directory. Type <code>make</code> to create the executable file. It has been tested with g++ 9.4.0 on the Ubuntu 20.04.4 LTS subsystem under Windows 10.</p>
+<h2>4. Some Results</h2>
+<p ><a class="el" href="index.html#table1">Table 1</a> shows the number of normal form Peaceful Queens solutions \(Q&#39;(n)\) on an \(n \times n\) chessboard for \(4 \leq n \leq 21\) with CPU and elapsed times using 35 of the available 36 threads on an Intel(R) Core(TM) i9-7980XE CPU @ 2.60GHz. Note that the number of solutions \(Q&#39;(n)\) in the second column of <a class="el" href="index.html#table1">Table 1</a> are exactly half of the corresponding numbers \(Q(n)\) in <a href="https://ian-parberry.github.io/peacefulqueens#table1">this table</a> since, as noted in <a class="el" href="index.html#sec2">Section 2</a>, \(Q(n) = 2Q&#39;(n)\).</p>
 <p ><a class="anchor" id="table1"></a></p><center> <table class="doxtable">
 <caption>Table 1. </caption>
 <tr>
-<th>\(n\)</th><th>\(Q(n)\)</th><th>CPU Time</th><th>Elapsed Time </th></tr>
+<th>\(n\)</th><th>\(Q&#39;(n)\)</th><th>CPU Time</th><th>Elapsed Time </th></tr>
 <tr>
-<td>4</td><td>2</td><td>&lt; 1 ms</td><td>4 ms </td></tr>
+<td>4</td><td>1</td><td>&lt; 1 ms</td><td>10 ms </td></tr>
 <tr>
-<td>5</td><td>10</td><td>&lt; 1 ms</td><td>2 ms </td></tr>
+<td>5</td><td>5</td><td>&lt; 1 ms</td><td>8 ms </td></tr>
 <tr>
-<td>6</td><td>4</td><td>&lt; 1 ms</td><td>2 ms </td></tr>
+<td>6</td><td>2</td><td>&lt; 1 ms</td><td>8 ms </td></tr>
 <tr>
-<td>7</td><td>40</td><td>&lt; 1 ms</td><td>2 ms </td></tr>
+<td>7</td><td>20</td><td>&lt; 1 ms</td><td>10 ms </td></tr>
 <tr>
-<td>8</td><td>92</td><td>&lt; 1 ms</td><td>4 ms </td></tr>
+<td>8</td><td>46</td><td>&lt; 1 ms</td><td>8 ms </td></tr>
 <tr>
-<td>9</td><td>352</td><td>&lt; 1 ms</td><td>3 ms </td></tr>
+<td>9</td><td>176</td><td>&lt; 1 ms</td><td>9 ms </td></tr>
 <tr>
-<td>10</td><td>724</td><td>&lt; 1 ms</td><td>8 ms </td></tr>
+<td>10</td><td>362</td><td>&lt; 1 ms</td><td>8 ms </td></tr>
 <tr>
-<td>11</td><td>2,680</td><td>&lt; 1 ms</td><td>7 ms </td></tr>
+<td>11</td><td>1,340</td><td>&lt; 1 ms</td><td>8 ms </td></tr>
 <tr>
-<td>12</td><td>14,200</td><td>&lt; 1 ms</td><td>12 ms </td></tr>
+<td>12</td><td>7,100</td><td>&lt; 1 ms</td><td>9 ms </td></tr>
 <tr>
-<td>13</td><td>73,712</td><td>578 ms</td><td>52 ms </td></tr>
+<td>13</td><td>36,856</td><td>595 ms</td><td>23 ms </td></tr>
 <tr>
-<td>14</td><td>365,596</td><td>3.78 sec</td><td>269 ms </td></tr>
+<td>14</td><td>182,798</td><td>2.64 sec</td><td>113 ms </td></tr>
 <tr>
-<td>15</td><td>2,279,184</td><td>26.2 sec</td><td>1.82 sec </td></tr>
+<td>15</td><td>1,139,592</td><td>18.14 sec</td><td>594 ms </td></tr>
 <tr>
-<td>16</td><td>14,772,512</td><td>2 min, 52 sec</td><td>11.65 sec </td></tr>
+<td>16</td><td>7,386,256</td><td>1 min, 41 sec</td><td>3.24 sec </td></tr>
 <tr>
-<td>17</td><td>95,815,104</td><td>19 min, 35 sec</td><td>1 min, 20 sec </td></tr>
+<td>17</td><td>47,907,552</td><td>11 min, 8 sec</td><td>21.15 sec </td></tr>
 <tr>
-<td>18</td><td>666,090,624</td><td>2 hr, 28 min</td><td>10 min, 2 sec </td></tr>
+<td>18</td><td>333,045,312</td><td>1 hr, 18 min</td><td>2 min, 32 sec </td></tr>
 <tr>
-<td>19</td><td>4,968,057,848</td><td>19 hr, 31 min</td><td>1 hr, 19 min </td></tr>
+<td>19</td><td>2,484,028,924</td><td>7 hr, 57 min</td><td>16 min, 25 sec </td></tr>
 <tr>
-<td>20</td><td>39,029,188,884</td><td>6 days, 16 hr</td><td>10 hr, 48 min </td></tr>
+<td>20</td><td>19,514,594,442</td><td>3 days, 10 hr</td><td>2 hr, 35 min </td></tr>
+<tr>
+<td>21</td><td>157,333,111,356</td><td>18 days, 14 hr</td><td>13 hr, 40 min </td></tr>
 </table>
 </center> </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 1 2022 14:55:11 for Multithreaded Peaceful Queens by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4
+Generated on Thu Jun 2 2022 12:04:22 for Multithreaded Peaceful Queens by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4
 </small></address>
 </body>
 </html>

@@ -2,16 +2,32 @@
 
 \mainpage Multithreaded Peaceful Queens
 
+## 1. Introduction
 
-## Normal Form
+The _Peaceful Queens problem_ is the problem of placing \f$n\f$ queens on an
+\f$n \times n\f$ chessboard in such a way that no queen threatens any other,
+recalling that queens can attack along row, column, diagonals, and back-diagonals.
+The code in this repository is a multi-threaded version of the backtracking code from
+[https://github.com/Ian-Parberry/peacefulqueens](https://github.com/Ian-Parberry/peacefulqueens)
+using the
+[`thread++` library](https://github.com/Ian-Parberry/threadplusplus).
+For more information about the backtracking algorithm, see
+[https://ian-parberry.github.io/peacefulqueens](https://ian-parberry.github.io/peacefulqueens).
 
+\anchor sec2
+## 2. Normal Form Peaceful Queens Solutions
+
+Instead of counting all solutions to the Peaceful Queens problem,
+we will count only solutions that have a special structure, called _normal form_ solutions.
 An \f$n \times n \f$ Peaceful Queens solution is said to be in _normal form_ if either
 (remembering that rows are numbered from \f$0\f$ to \f$n - 1\f$ from top to bottom and
 columns are numbered from \f$0\f$ to \f$n - 1\f$ from left to right),
+
 1. the queen in the last column is below the middle of the board
 (the red rectangle in \ref fig1 "Fig. 1" and \ref fig2 "Fig. 2"), more precisely, 
 the queen in column \f$n - 1\f$ is in row \f$\geq \lceil n/2 \rceil\f$,
 or 
+
 2. \f$n\f$ is odd, the queen in the last column is in the middle of the board (the red square in \ref fig3 "Fig. 3")
 and the queen in the second-last column is below the middle of the board
 (the blue rectangle in \ref fig3 "Fig. 3"),
@@ -33,14 +49,33 @@ problem and \f$Q'(n)\f$ is the number of solutions in normal form, then \f$Q(n) 
 \anchor fig3
 \image html 1642053.svg "Fig. 3: A solution to the 7x7 Peaceful Queens problem that has the queen inside the red square and a queen inside the blue rectangle is in normal form." width=25%
 
-## The Results
+## 3. Compiling the Code
 
+### 3.1 All Platforms
+
+Before proceeding, download 
+[https://github.com/Ian-Parberry/threadplusplus](https://github.com/Ian-Parberry/threadplusplus)
+and compile it according to the instructions in 
+[https://ian-parberry.github.io/threadplusplus/](https://ian-parberry.github.io/threadplusplus/).
+
+
+### 3.2 Windows and Visual Studio
+A Visual Studio solution file `peacefulqueens_mt.sln` has been provided in the root folder. It has been tested with Visual Studio 2019 Community under Windows 10.
+
+### 3.3 *NIX and g++
+A `make` file has been placed in the `Src` directory. Type `make` to create the executable file.
+It has been tested with g++ 9.4.0 on the Ubuntu 20.04.4 LTS subsystem under Windows 10.
+
+## 4. Some Results
 
 \ref table1 "Table 1" shows the
 number of normal form Peaceful Queens solutions \f$Q'(n)\f$ on an \f$n \times n\f$ chessboard for
-\f$4 \leq n \leq 20\f$ with CPU and elapsed times using 15 of the available 16
-threads on an
-Intel(R) Core(TM) i9-9900 CPU @ 3.10GHz.
+\f$4 \leq n \leq 21\f$ with CPU and elapsed times using
+35 of the available 36 threads on an Intel(R) Core(TM) i9-7980XE CPU @ 2.60GHz.
+Note that the number of solutions \f$Q'(n)\f$ in the second column of \ref table1 "Table 1"
+are exactly half of the corresponding numbers \f$Q(n)\f$ in
+[this table](https://ian-parberry.github.io/peacefulqueens#table1)
+since, as noted in \ref sec2 "Section 2", \f$Q(n) = 2Q'(n)\f$.
 
 \anchor table1
 <center>
@@ -48,24 +83,26 @@ Intel(R) Core(TM) i9-9900 CPU @ 3.10GHz.
 <caption>
 Table 1.
 </caption>
-<tr><th>\f$n\f$</th><th>\f$Q(n)\f$</th><th>CPU Time</th><th>Elapsed Time</th>
-<tr><td>4</td><td>2</td><td>< 1 ms</td><td>4 ms</td>
-<tr><td>5</td><td>10</td><td>< 1 ms</td><td>2 ms</td>
-<tr><td>6</td><td>4</td><td>< 1 ms</td><td>2 ms</td>
-<tr><td>7</td><td>40</td><td>< 1 ms</td><td>2 ms</td>
-<tr><td>8</td><td>92</td><td>< 1 ms</td><td>4 ms</td>
-<tr><td>9</td><td>352</td><td>< 1 ms</td><td>3 ms</td>
-<tr><td>10</td><td>724</td><td>< 1 ms</td><td>8 ms</td>
-<tr><td>11</td><td>2,680</td><td>< 1 ms</td><td>7 ms</td>
-<tr><td>12</td><td>14,200</td><td>< 1 ms</td><td>12 ms</td>
-<tr><td>13</td><td>73,712</td><td>578 ms</td><td>52 ms</td>
-<tr><td>14</td><td>365,596</td><td>3.78 sec</td><td>269 ms</td>
-<tr><td>15</td><td>2,279,184</td><td>26.2 sec</td><td>1.82 sec</td>
-<tr><td>16</td><td>14,772,512</td><td>2 min, 52 sec</td><td>11.65 sec</td>
-<tr><td>17</td><td>95,815,104</td><td>19 min, 35 sec</td><td>1 min, 20 sec</td>
-<tr><td>18</td><td>666,090,624</td><td>2 hr, 28 min</td><td>10 min, 2 sec</td>
-<tr><td>19</td><td>4,968,057,848</td><td>19 hr, 31 min</td><td>1 hr, 19 min</td>
-<tr><td>20</td><td>39,029,188,884</td><td>6 days, 16 hr</td><td>10 hr, 48 min</td>
+<tr><th>\f$n\f$</th><th>\f$Q'(n)\f$</th><th>CPU Time</th><th>Elapsed Time</th>
+<tr><td>4</td><td>1</td><td>< 1 ms</td><td>10 ms</td>
+<tr><td>5</td><td>5</td><td>< 1 ms</td><td>8 ms</td>
+<tr><td>6</td><td>2</td><td>< 1 ms</td><td>8 ms</td>
+<tr><td>7</td><td>20</td><td>< 1 ms</td><td>10 ms</td>
+<tr><td>8</td><td>46</td><td>< 1 ms</td><td>8 ms</td>
+<tr><td>9</td><td>176</td><td>< 1 ms</td><td>9 ms</td>
+<tr><td>10</td><td>362</td><td>< 1 ms</td><td>8 ms</td>
+<tr><td>11</td><td>1,340</td><td>< 1 ms</td><td>8 ms</td>
+<tr><td>12</td><td>7,100</td><td>< 1 ms</td><td>9 ms</td>
+<tr><td>13</td><td>36,856</td><td>595 ms</td><td>23 ms</td>
+<tr><td>14</td><td>182,798</td><td>2.64 sec</td><td>113 ms</td>
+<tr><td>15</td><td>1,139,592</td><td>18.14 sec</td><td>594 ms</td>
+<tr><td>16</td><td>7,386,256</td><td>1 min, 41 sec</td><td>3.24 sec</td>
+<tr><td>17</td><td>47,907,552</td><td>11 min, 8 sec</td><td>21.15 sec</td>
+<tr><td>18</td><td>333,045,312</td><td>1 hr, 18 min</td><td>2 min, 32 sec</td>
+<tr><td>19</td><td>2,484,028,924</td><td>7 hr, 57 min</td><td>16 min, 25 sec</td>
+<tr><td>20</td><td>19,514,594,442</td><td>3 days, 10 hr</td><td>2 hr, 35 min</td>
+<tr><td>21</td><td>157,333,111,356</td><td>18 days, 14 hr</td><td>13 hr, 40 min</td>
 </table>
 </center>
+
 **/
