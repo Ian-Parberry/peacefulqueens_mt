@@ -102,7 +102,20 @@ Table 1.
 <tr><td>19</td><td>2,484,028,924</td><td>7 hr, 57 min</td><td>16 min, 25 sec</td>
 <tr><td>20</td><td>19,514,594,442</td><td>3 days, 10 hr</td><td>2 hr, 35 min</td>
 <tr><td>21</td><td>157,333,111,356</td><td>18 days, 14 hr</td><td>13 hr, 40 min</td>
+<tr><td>22</td><td>1,345,504,350,822</td><td>176 days, 21 hr</td><td>5 days, 10 hr</td>
 </table>
 </center>
+
+Interestingly, if you plot \f$\log_2(Q'(n))\f$ for \f$11 \leq n \leq 22\f$
+using Microsoft Excel,
+the graph trends to \f$0.04062(n-10)^2 + 2.19072(n-10) + 8.18282\f$,
+that is, \f$0.04062n^2 + 1.37832n - 9.66238\f$ with \f$R^2 = 0.99998\f$
+(see \ref fig4 "Fig. 4"). One might optimistically
+hypothesize from this observation that \f$Q'(23)\f$ would be
+approximately \f$2^{43.527} \approx 12{,}674{,}552{,}109{,}245\f$
+and would require about a month of elapsed time to compute on the computer described above.
+
+\anchor fig4
+\image html trendline.png "Fig. 4: Graph of the logarithm base 2 of Q'(n) with trendline." width=40%
 
 **/

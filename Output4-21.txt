@@ -1,0 +1,33 @@
+\ref table1 "Table 1" shows the
+number of normal form Peaceful Queens solutions \f$Q'(n)\f$ on an \f$n \times n\f$ chessboard for
+\f$4 \leq n \leq 21\f$ with CPU and elapsed times using
+35 of the available 36 threads on an Intel(R) Core(TM) i9-7980XE CPU @ 2.60GHz.
+
+\anchor table1
+<center>
+<table>
+<caption>
+Table 1.
+</caption>
+<tr><th>n</th><th>Solutions</th><th>CPU Time</th><th>Elapsed Time</th>
+<tr><td>4</td><td>1</td><td>32 ms</td><td>10 ms</td>
+<tr><td>5</td><td>5</td><td>< 1 ms</td><td>8 ms</td>
+<tr><td>6</td><td>2</td><td>< 1 ms</td><td>8 ms</td>
+<tr><td>7</td><td>20</td><td>< 1 ms</td><td>10 ms</td>
+<tr><td>8</td><td>46</td><td>< 1 ms</td><td>8 ms</td>
+<tr><td>9</td><td>176</td><td>< 1 ms</td><td>9 ms</td>
+<tr><td>10</td><td>362</td><td>< 1 ms</td><td>8 ms</td>
+<tr><td>11</td><td>1,340</td><td>31 ms</td><td>8 ms</td>
+<tr><td>12</td><td>7,100</td><td>< 1 ms</td><td>9 ms</td>
+<tr><td>13</td><td>36,856</td><td>595 ms</td><td>23 ms</td>
+<tr><td>14</td><td>182,798</td><td>2.64 sec</td><td>113 ms</td>
+<tr><td>15</td><td>1,139,592</td><td>18.14 sec</td><td>594 ms</td>
+<tr><td>16</td><td>7,386,256</td><td>1 min, 41 sec</td><td>3.24 sec</td>
+<tr><td>17</td><td>47,907,552</td><td>11 min, 8 sec</td><td>21.15 sec</td>
+<tr><td>18</td><td>333,045,312</td><td>1 hr, 17 min, 51 sec</td><td>2 min, 32 sec</td>
+<tr><td>19</td><td>2,484,028,924</td><td>7 hr, 56 min, 28 sec</td><td>16 min, 25 sec</td>
+<tr><td>20</td><td>19,514,594,442</td><td>3 days, 10 hr, 17 min, 12 sec</td><td>2 hr, 34 min, 51 sec</td>
+<tr><td>21</td><td>157,333,111,356</td><td>18 days, 14 hr, 3 min, 22 sec</td><td>13 hr, 39 min, 43 sec</td>
+<tr><td>22</td><td>1,345,504,350,822</td><td>176 days, 20 hr, 33 min, 41 sec</td><td>5 days, 10 hr, 21 sec</td>
+</table>
+</center>
